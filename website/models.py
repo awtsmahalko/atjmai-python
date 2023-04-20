@@ -68,3 +68,16 @@ class Skills(db.Model):
     skill_name = db.Column(db.String(150), nullable=True)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, nullable=False, default='0000-00-00 00:00:00', onupdate=db.func.current_timestamp())
+
+class Users(db.Model):
+    __tablename__ = 'tbl_users'
+
+    user_id = db.Column(db.Integer, primary_key=True)
+    user_fullname = db.Column(db.String(255), nullable=False)
+    user_email = db.Column(db.String(150), nullable=False)
+    user_password = db.Column(db.String(32), nullable=False)
+    user_category = db.Column(db.String(1), nullable=False, comment='A=Admin,E=Employer,S=Student/Alumni')
+    user_status = db.Column(db.Integer, nullable=False, default=0)
+    user_img = db.Column(db.String(255), nullable=False, default='default_male.png')
+    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, nullable=False, default='0000-00-00 00:00:00', onupdate=db.func.current_timestamp())

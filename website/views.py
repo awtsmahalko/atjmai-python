@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Alumni, Employers, Jobs, JobSkills, Skills
+from .models import Alumni, Employers, Jobs, JobSkills, Skills,Users
 from . import db
 import json
 from datetime import datetime, timedelta
@@ -62,7 +62,7 @@ def get_employer_data(employer_id):
         'employer_name':employer_data.employer_name,
         'industry_id':employer_data.industry_id,
         'sub_industry_id':employer_data.sub_industry_id,
-        'user_id':employer_data.user_id,
+        'users':get_users_data(employer_data.user_id),
         'updated_at': str(employer_data.updated_at),
     }
 
@@ -99,4 +99,19 @@ def get_skills_data(skill_id):
         'skill_id':0,
         'skill_name':"",
         'updated_at': "",
+    }
+
+def get_users_data(user_id):
+    user_data = Users.query.filter_by(user_id=user_id).first()
+    if user_data:
+        return {
+            'created_at': str(user_data.created_at),
+            'user_fullname':user_data.user_fullname,
+            'user_id':user_data.user_id,
+            'user_img':user_data.user_img,
+            'updated_at': str(user_data.updated_at),
+        }
+
+    return {
+        'user_id':0,
     }
